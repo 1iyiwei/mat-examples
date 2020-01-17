@@ -15,7 +15,8 @@
         "allowJs": false
     },
     "include": [
-        "index.ts"
+        "index.ts",
+        "console.ts"
     ],
     "exclude": [
         "node_modules"
