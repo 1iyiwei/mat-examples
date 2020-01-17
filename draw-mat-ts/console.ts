@@ -1,3 +1,7 @@
+/**
+ A simplified version of index.ts without svg drawing
+*/
+
 import { findMats, getPathsFromStr, Mat, traverseEdges, toScaleAxis, getCurveToNext } from 'flo-mat';
 
 /**
@@ -27,6 +31,35 @@ function getCubicBezierPathStr(ps: number[][]) {
     return `M${x0} ${y0} C${x1} ${y1} ${x2} ${y2} ${x3} ${y3}`;
 }
 
+/**
+ * Returns a function that prints an array of MAT curves.
+ * @param mats An array of MATs to draw.
+  */
+function printMats(
+        mats: Mat[]) {
+
+    mats.forEach(f);
+
+    /**
+     * Print a MAT curve 
+     */
+     function f(mat: Mat) {
+        let cpNode = mat.cpNode;
+        
+        if (!cpNode) { return; }
+
+        let fs = [,,getLinePathStr, getQuadBezierPathStr, getCubicBezierPathStr];
+
+        traverseEdges(cpNode, function(cpNode) {
+            if (cpNode.isTerminating()) { return; }
+            let bezier = getCurveToNext(cpNode);
+            if (!bezier) { return; }
+
+            let points = fs[bezier.length](bezier);
+            console.log(points);
+        });
+    }
+}
 
 /**
  * The SVG path string representing our shape.
@@ -68,9 +101,10 @@ function main() {
     // Get MATs from the loops.
     let mats = findMats(bezierLoops, 3);
 
+    // Get the SAT (at scale 1.5) of the MATs (of which there is only 1)
     let sats = mats.map(mat => toScaleAxis(mat, 1.5));
 
-    console.log("TODO: output SAT");
+    printMats(sats);
 }
 
 
