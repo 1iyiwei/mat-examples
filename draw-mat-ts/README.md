@@ -1,12 +1,4 @@
-# MAT library code example
-
-Please see the [main repo](https://github.com/1iyiwei/mat-examples) for details.
-
-## StackBlitz
-
-[Live example](https://stackblitz.com/edit/typescript-yucdon).
-
-## Usage
+# Typescript example
 
 To compile from ts to js:
 
